@@ -21,8 +21,7 @@
         sh "docker ps -aq | xargs docker rm || true"
         sh "docker images -aq -f dangling=true | xargs docker rmi || true"
       }
-    }
-    stage("Build") {
+    }    stage("Build") {
       sh "docker build -t ${DOCKERHUB_USERNAME}/cd-demo:${BUILD_NUMBER} ."
     }
     stage("Publish") {
@@ -56,7 +55,7 @@
       try {
         // Create the service if it doesn't exist otherwise just update the image
         sh '''
-        //echo 'hello';
+        echo 'hello'
           SERVICES=$(docker service ls --filter name=cd-demo --quiet | wc -l)
           if [[ "$SERVICES" -eq 0 ]]; then
             docker network rm cd-demo || true
